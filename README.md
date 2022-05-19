@@ -18,6 +18,7 @@ ls -l  will list the things present directory in long details i.e. with permisio
 some time you need to do other operation on the result you received on terminal there this symbol comes in handy it allows you to perform some other action on the output just received.
 lets say you ran cat command what it does it simply shows you the content of the files
 but when piped with other command such as grep you can do other things like
+
 cat a.txt | grep "he"
 this will show all the lines in which he word is present
 a.txt is the file we operated on. 
