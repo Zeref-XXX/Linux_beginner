@@ -1,4 +1,4 @@
-# Linux_beginner
+# Linux beginner
 Linux stuff for Absolute Beginners
 
 #Basic part of Linux commands
