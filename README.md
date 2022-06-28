@@ -3,7 +3,7 @@ Linux stuff for Absolute Beginners
 
 #Basic part of Linux commands
 
-1) ##Most important things
+1) #Most important things
  Before getting your hands dirty, you must know what is man, pipe "|"symbol mean , and yes what is flag.
 
 
