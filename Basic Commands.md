@@ -4,7 +4,7 @@ Always try to read the man page of a command for more info on that commands
 
 man     - Manual page of command full info, sytax on that   
 
-#       - this is a comment
+"#"       - this is a comment without quotes
 
 cd      - changes the directory 
 
