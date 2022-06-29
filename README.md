@@ -1,5 +1,7 @@
 # Linux beginner
 
+choose whatever Linux distro comes to your mind and get started in that one [ubuntu,mint,fedora,....] anyone and get going
+
 
 #Basic part of Linux commands
 
@@ -9,7 +11,7 @@
 
 ok so lets begin :--
 
-### man command
+## man command
 this commands show the detail of every command available on your pc i.e. what are the possible combination you can perform with the command , different flags available
 for example:-
 ls -l  will list the things present directory in long details i.e. with permisions it has and groups etc.
