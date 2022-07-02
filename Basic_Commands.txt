@@ -34,4 +34,18 @@ history - displays all the previous executed commands
 
 clear   - cleans the terminal 
 
+less	- scrollable output / keeps the terminal clean 
+
+head	- prints the top 10 or the number of lines you want to print from the top
+
+tail	- print last 10 lines or any number of last lines
+
+sort 	- sort the output in alphanumeric order [ -r in reverse order]
+
+tr 	- translate / delete the characters
+
+wc	- counts the lines, words and size of file
+
+grep 	- prints the lines that match the pattern
+
 

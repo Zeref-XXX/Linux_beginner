@@ -1,0 +1,46 @@
+Linux have 3 standard streams
+
+1> stdin  [ standard input  ] code is 0
+
+2> stdout [ standard output ] code is 1
+
+3> stderr [ standard error  ] code is 2
+
+To redirect the output to other files 
+
+use > 
+
+example :
+ ls > op.txt  
+[ this won't show any output instead it will make a file and having output of the command. > overwrite any text if present in the files]
+
+ls >>op.txt
+[this will do the same as above but will not overwrite the content , it only adds or appends in the file]
+
+ Error 
+
+typing any command wrongly will gives error i.e. 
+
+tg 
+
+Now to avoid this/ ignore the error we use code 2 
+
+lg 2> we.txt
+
+this will redirect it 
+
+-------------------------------------------
+
+environment variable
+ 
+store usefull information that system/shell/user needs, its value keeps on changing as we user our system or make some changes.
+
+env - commands shows the environment present in the system
+
+
+example-  
+echo $home -  $home is a variable and prints the home directory of current user
+ 
+echo $user - prints the name of current user
+
+$path - stores the path of the present commands/ just like path variable in windows
