@@ -1,0 +1,21 @@
+mkdir   -- Create the DIRECTORY(ies), if they do not already exist.
+
+syntax:
+
+mkdir [OPTION]... DIRECTORY...
+
+
+::
+
+mkdir linux         -- this creates a directory names linux
+
+mkdir linux is fun  -- this create 3 diretory named linux is fun
+
+mkdir ../           -- create directory in parent directory
+
+mkdir -v linux      -- verbose it shows whats has been done
+
+mkdir -p            -- creates other directory 
+
+example : mkdir -p 1/2/3/  this creates directory 1 which have 2 inside and 2 have 3 inside
+
