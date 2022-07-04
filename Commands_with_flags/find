@@ -1,0 +1,25 @@
+ Find command 
+
+
+ find <location> <options>
+
+find / -type f -name *.conf -user root -size +20k -newermt 2020-03-03 -exec ls -al {} \; 2>/dev/null 
+
+what does this mean 
+
+/ location on which find will search
+
+-type f 	:we tell type of the object we are searching, f stands for files.
+
+-name *.conf 	: this tells the name of the object we are searching for , * means all files with .conf extension
+
+-user root	: filters and shows the files whose owner is root user
+
+-newermt 2020-03-04  : with this only files newer than the specified date will be prisinted
+
+-exec ls -al {} \;  this option executes the commands using curly braces as placeholders for each result.
+ 
+2>/dev/null : 	This is a STDERR redirected to null device, this makes sures that no error is displayed in the terminal .
+
+ 
+
