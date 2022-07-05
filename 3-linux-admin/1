@@ -1,0 +1,139 @@
+Admin user is called root or super user , it has all permission
+--------------------------------------------------
+
+No  user can not access other user directory
+
+every user has a userid [uid] to identify the user
+
+system uses groups to set permission for every user in that group
+
+ to run a command with admin rights we have to use
+sudo command before that commands
+or
+sudo su will make us the super/root user and can run all the commands
+
+and some times we have to give root user right 
+
+to add user who can run sudo command make changes in the /etc/sudoers  files 
+view who can use sudo command or add/remove user who can do so
+
+--------------------------------------------------------
+/etc/passwd 	:  contains information for all user accounts on the system and is owned by root.
+
+mark:x:1001:1001:mark,,,:/home/mark:/bin/bash
+[--] - [--] [--] [-----] [--------] [--------]
+|    |   |    |     |         |        |
+|    |   |    |     |         |        +-> 7. Login shell
+|    |   |    |     |         +----------> 6. Home directory of user
+|    |   |    |     +--------------------> 5. GECOS/ user info
+|    |   |    +--------------------------> 4. GID [group id]
+|    |   +-------------------------------> 3. UID [user id]
+|    +-----------------------------------> 2. Password
++----------------------------------------> 1. Username
+
+x means the password is stored in /etc/shadow file
+
+1 Username. The string you type when you log into the system. Each username must be a unique string on the machine. The maximum length of the username is restricted to 32 characters.
+
+2 Password. In older Linux systems, the user’s encrypted password was stored in the /etc/passwd file. On most modern systems, this field is set to x, and the user password is stored in the /etc/shadow file.
+
+3 UID. The user identifier is a number assigned to each user. It is used by the operating system to refer to a user.
+
+4 GID. The user’s group identifier number, referring to the user’s primary group. When a user creates a file , the file’s group is set to this group. Typically, the name of the group is the same as the name of the user. User’s secondary groups are listed in the /etc/groups file.
+
+5 GECOS or the full name of the user. This field contains a list of comma-separated values with the following information:
+ User’s full name or the application name.
+Room number.
+Work phone number.
+Home phone number.
+Other contact information.
+
+6 Home directory. The absolute path to the user’s home directory. It contains the user’s files and configurations. By default, the user home directories are named after the name of the user and created under the /home directory.
+
+7 Login shell. The absolute path to the user’s login shell. This is the shell that is started when the user logs into the system. On most Linux distributions, the default login shell is Bash.
+---------------------------------
+
+/etc/groups 
+
+ It stores group information or defines the user groups i.e. it defines the groups to which users belong. There is one entry per line, and each line has the following format (all fields are separated by a colon (:)
+
+root:x:0: 
+
+Where,
+1 group_name: It is the name of group. If you run ls -l command, you will see this name printed in the group field.
+
+2 Password: Generally password is not used, hence it is empty/blank. It can store encrypted password. This is useful to implement privileged groups.
+
+3 Group ID (GID): Each user must be assigned a group ID. You can see this number in your /etc/passwd file.
+
+4 Group List: It is a list of user names of users who are members of the group. The user names, must be separated by commas.
+
+-------------------------------------------------
+
+sudo adduser username 	:	creates a user
+
+sudo userdel username 	:	delete a user
+
+sudo passwd username	: 	change the password of the user
+
+-----------------------------------------------	
+
+sudo hostname custom-hostname ; restart the terminal and the host name is changes.
+
+--------------------------------------------
+
+Peyrmissions
+ ls -l give all the detals of the items present in current directory
+
+r 	: read
+w	: write 
+x	: execute
+d	: directory
+l	: link
+f	: file
+
+chmod +777 file-name	: give full permission
+
+chmod 000 file-name	: removes all permission
+
+codes :
+
+0	: no permission
+1	: execute
+2	: write
+3	: write + execute
+4	: read
+5	: read + execute
+6	: read + write
+7	: read + write + execute
+
+---------------------------------------------
+chmod +321 file.txt
+       |||
+------- |--------
+|	|	|
+user group for-any-other-user
+
+__________________________________
+
+sudo chown user-name file-name 	: 	change ownershipm of file
+
+sudo chgrp group-name file-name	:	change group of the file
+
+sudo chown user-name:group-name file-name : both
+
+---------------------------------------------
+
+to change default permission give to new files directory
+
+umask code/number
+
+if you want to change the folder permission value from 777 (read, write, and execute for all) to 444 (read for all), you need to apply a umask value of 333, since:
+
+777 - 444 = 333
+
+----------------------------------------------
+
+Process Permissions
+
+
