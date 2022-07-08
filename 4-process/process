@@ -1,0 +1,181 @@
+Processs:  Program in execution/running , managed by kernel
+
+Each and every process has Process id [P.id]
+
+to check the running process we use command ps
+
+$ ps 
+
+    PID TTY          TIME CMD
+  55724 pts/2    00:00:00 bash
+  55841 pts/2    00:00:00 ps
+
+Pid
+
+tty  		: controlling terminal of the process
+
+Time 		: total cpu usage time of the process
+
+cmd / command   : command that is running
+
+______________________________________________________
+
+Flags-  a u x
+ 
+a 	: all the process
+u	: more details of the process
+x	: list of all the process , including those that do not have terminal associated (background processes , daemon etc)
+
+-------------------------------------------
+command:
+$ps aux : all and everything 
+
+we get_________________________________
+
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root           1  0.0  0.1 164320 10520 ?        Ss   06:07   0:05 /sbin/init splash
+...
+---------------------------------------------------------------------------------------- 
+user 	: owner of the process 
+pid	: process id
+%cpu	: % of cpu being used by the process
+%mem	: % of memory used by the process
+vsz	: virtual max memory used by the process[ memory allocated to process, it can use all of it or less than this reserved memory not more than that]
+rss	: memory currently consumed by the process
+tty	: controlling terminal [ ? means : no terminal associated, ]
+stat	: status of the process
+start	: starting time of the process
+time 	: cpu time of the process
+commmand: command that is runnning
+
+-----------------------------------------------------------------------
+
+$top : is the cli utility which shows the realtime resource usege of the system 
+
+$htop : more famous to use this we need to install it 
+____________________________________________________________________
+
+controlling terminal
+
+1 > TTY1 	-> Regular terminal
+2 > pts/1 	-> pseudo terminal
+
+
+regular terminal : fully cli no gui effect
+ctrl + f1,f2,f3...[ switches the tty terminal ]
+
+pseudo :
+gui terminal  we normally use
+
+________________________________________
+
+kernel is resposible for managing process [ allocating resource and all ]
+
+------------------------------------------------------------------------------
+
+what happens when a process is created.
+ when we create a process , it may duplicate/ clone a process  done through  fork system call [ request that a process makes to the kernel]
+
+fork system call : clones and create a child process and allocate pid to it, and the process from it was cloned becomes the parent process.
+child can use the same program its parent is using or  use execv system call through which it can invoke new commands .
+
+_____________________________________________________________________________
+
+init is the 1st process when system starts [ PID of 1 ] is the mother porcess of all process, has root previlages . 
+
+_____________________________________________
+
+States of process
+
+1> R 	: running/runnable
+1> S	: interruptable sleep [waiting for i/o or something else]
+3> D	: uninterruptable sleep 
+4> Z	: Zombie process/ terminated/ wait call 
+5> T	: terminated /stopped
+
+---------------------------
+
+/proc/ contains all the process info [ pid as directory]
+
+[ Every thin gin linux is file ] this proves it
+
+
+kerenel see the process through /proc/ directory and manage it 
+----------------------------------------------------------------
+
+cases 
+
+1> parent process dies
+   child process [ aka orphan process]
+ 
+kernel  places this child under the init process [ mother process]
+
+2> parent process does not want to acknowlege the status of the child
+   child process dies
+
+kernel turns this child into zombie process [ already terminated because the system does not know the termination status of this ]
+
+reaping : if the parent callls wait system call to know the termination status of the child process
+
+and if still parent does not calls the wait system call then the init process will adopt this zombie process and call the wait system call and terminates this process.
+_______________________________________________________________________
+SIGNALS
+
+notification to the process  that something happened.
+key pressed or whatever is happening
+
+each process have signal handler to handel the signals given.
+
+--------------------------------------------------------
+1> SIGHUP/HUP/1  	-> Hang up
+2> SIGINT/INT/2	  	-> Interrupt
+3> SIGKILL/KILL/9	-> kill
+4> SIGSEGV/SEGV/11	-> segmentation fault
+5> SIGTERM/TERM/15	-> termnate
+6> SIGSTOP/STOP/19	-> Stop
+
+_____________________________________________________________________
+
+
+$kill process-id : kills the process[ sends terminate signal and kills it]
+
+$kill -9 pid 	: kills it instantly [no termination signal]
+
+SIGUP/HUP 	: teminal controlling is closed and its hung up
+
+SIGINT/INT 	: interrupting
+
+SIGKILL/KILL 	: kills process and the resources might not able to be used by other process [ no cleanup after klling]
+
+SIGTER 		: kills the process after cleans up/free up resource
+
+SIGSTOP/STOP	: suspend the process and after some time can be resumed again
+
+SIGSEGV/SEGV	: process trying to access the memory are which it does not have permission to access.
+
+_______________________________________________________________
+
+Time slice : cpu time use for process 
+
+___________________________________________________________________
+
+managing process
+
+bg 	; background
+
+fg 	: foreground
+cmmnd :- $fg %pid 
+
+jobs 	: background process
+
+-------------------
+command &
+ex: cat &
+or  
+
+sends the process in background and we can run other commands on the foreground
+
+
+
+
+
