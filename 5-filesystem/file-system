@@ -1,0 +1,260 @@
+
+
+/dev
+
+
+list devices
+
+ls -l /dev 	: list deives in detail 
+
+o/p
+------------------------------------------
+crw-r--r--  1 root root     10, 235 Jul 13 16:35   autofs
+------------------------------------------------------
+  |	    |  |    |       |   |    ----------	     |
+  |	    |  |    |	    |   |        |  	     ----- device name
+  |         |  |    |       |   |        |
+  |         |  |    |       |   |         ---------------- time stamp
+  |         |  |    |       |   |  
+  |         |  |    |       |    ------------------------- minor device
+  |         |  |    |       | 
+  |         |  |    |       ------------------------------ major device
+  
+  1         2  3    4    
+
+1  permisson
+3  owner 
+4  group 
+
+________________________________________________________________  	
+
+
+codes:
+
+b	- block  device { hdd, ssd..}
+c	- chareacter device
+d 	- directory
+l	- link
+p	- pipe (|)
+s	- socket 
+________________________________________________________________
+
+/dev - allows  devices to access deives
+
+sudo devices - they are not physically connected  { character devices}
+transfer one character at a time
+
+ex : /dev/null
+     /dev/null 
+     /dev/zero
+
+_____________________________________________
+
+/sys -- diretory show more detailed information of /dev directory
+	it allow to view information and manage devices
+
+ex.  manufacturere info , time , every info of the devices
+
+
+________________________________________________________________
+
+
+FILE SYSTEM HIERARCHY 
+
+contains 
+
+1 >  /		: Root directory/ everything
+2 >  bin 	: binaries
+3 >  boot	: bootloader files]
+4 >  dev	: device files
+5 >  etc 	: configuration  files  of programs
+6 >  home	: user directory
+7 >  lib	: library files
+8 >  media	: connected media devices { usb,hdd,,,,,,,}
+9 >  mnt	: temporary mounted fs { files system}
+10>  opt	: optional software packages
+11>  proc	: process info
+12>  root	: home directory of root
+13>  run	: information of runninng program since the system started
+14>  sbin	: system binaries
+15>  sys	: helps in managing the system devices
+16>  tmp	: temp file storage
+17>  usr	: user installed software and utilites
+18>  var	: variable directory
+		  ( continously changing informations are in here )
+_______________________________________________________________________	
+
+Desktop File system type
+
+1> ext4 	: latest linux fs, compatible with previous fs type - ext3 ..., spports disk space -> 1 exabyte & file size -> 16 TB
+
+2> Btrfs 	: (Butter/Better fs), most latest fs, still not compatible/stable .
+
+3> XFS		: good for storing large files & jounalling them. { Youtube may be an example of using this )
+
+4> NTFS	&  FAT	: Windows fs
+
+5> HFS + 	: Mac fs
+________________________________________ 
+
+2 main Partition scheme
+
+1> MBR	: master boot record    [supports upto 2 TB & 4 primary partition  ]
+
+you can make 1  primary partition a Extened partiotion and it can have many logical partition act as a primary partition. 
+
+2> GPT 	: GUID Partition Table { Globally Unique ID} most used with UEFI based booting
+_________________________________________
+To know which FS we are using type command :-
+
+df -T 
+
+To know Partition table :-
+
+____________________________________________
+
+File System Strucutre
+
+1> Boot block	: located in the 1st few sector of fs and used to boot th OS , every os need one boot block
+
+2> Super block 	: single block comes after the boot block .  contains info about fs 
+3> Inode Table	: db that manages our files, each file/directory has an unique entry in Inode Table
+
+4> Date block	: actual data of the files and directories . [sudo parted -l ] 
+______________________________________________________________________
+
+Tools for partitioning 
+
+1> fdisk	: cli tool & does not support GPT
+2> parted	: cli tools & supports MBR & GPT
+3> Gparted 	: GUI of Parted
+4> gdisk	: cli do not support MBR
+_______________________________________________________________
+
+/etc/fstab : 
+
+if we want to mount a fs on boot we can write it in the file for that
+___________________________
+df -h
+
+shows currently mounted fs , utilization
+_______________________________________________
+
+du -h 
+
+current directory disk utilization 
+
+_____________________________________________
+
+INODE [ Index ] Table 
+
+db to manage files/directory, describes the all the info of the file , owner,size no.  of blocks, pointer every thing except - [ file name and files ]
+---------------
+df -i [ show inodes that are left and used .
+-------------------------------------------------
+every inode has 15 pointers{ super block } in any fs
+
+size of - 
+1   -- 4kb
+2---|
+3   |
+4   |---pointer  points towards data
+5   |
+.   |
+.   |
+12--|
+
+13 ---points to another group[ array ] of pointers that will point towards the data
+
+14  --- array of pointers which point to another set of pointer, which then  point towards the data
+
+15  ---  array of pointers which points towards array of pointers, which points towars another array of pointers,  which then  point towards the data
+
+13 to 15 are known as Indirect blocks 
+________________________________________________________
+
+Symlinks /  Symbolic / soft links are shortcuts in windows [ alias] 
+
+
+_________________________________________________
+
+soft links
+
+$ touch 1 2 3
+
+$ ln -s 1 soft1  { soft link of file 1 to soft1 file]
+
+-------------------------------o/p
+
+  ls -l
+total 8
+-rw-r--r-- 1 kirito kirito    0 Jul 14 20:52 1
+-rw-r--r-- 1 kirito kirito    0 Jul 14 20:52 2
+-rw-r--r-- 1 kirito kirito    0 Jul 14 20:52 3
+-rw-r--r-- 1 kirito kirito 5068 Jul 14 20:48 file-system
+lrwxrwxrwx 1 kirito kirito    1 Jul 14 20:52 soft1 -> 1
+
+--------------------------------------------
+$ ln 2 hard  [ hard link of file 2 to hard file]
+
+---------------------o/p
+ls -l
+total 8
+-rw-r--r-- 1 kirito kirito    0 Jul 14 20:52 1
+-rw-r--r-- 2 kirito kirito    0 Jul 14 20:52 2
+-rw-r--r-- 1 kirito kirito    0 Jul 14 20:52 3
+-rw-r--r-- 1 kirito kirito 5068 Jul 14 20:48 file-system
+-rw-r--r-- 2 kirito kirito    0 Jul 14 20:52 hard
+lrwxrwxrwx 1 kirito kirito    1 Jul 14 20:52 soft1 -> 1
+ 
+------------------------------------------------------------
+$ ls -li
+total 8
+4599153 -rw-r--r-- 1 kirito kirito    0 Jul 14 20:52 1
+4599157 -rw-r--r-- 2 kirito kirito    0 Jul 14 20:52 2
+4599158 -rw-r--r-- 1 kirito kirito    0 Jul 14 20:52 3
+4599154 -rw-r--r-- 1 kirito kirito 5068 Jul 14 20:48 file-system
+4599157 -rw-r--r-- 2 kirito kirito    0 Jul 14 20:52 hard
+4599159 lrwxrwxrwx 1 kirito kirito    1 Jul 14 20:52 soft1 -> 1
+------------------------------------------------------------------------
+
+soft link points to the file and file points to the inode [ it has different inode no than the file]
+
+ when file is deleted the link gets broken , editing the soft links makes changes in the original file.
+_________________________________________________________________________________________________________
+
+hard link directly points to the inode and has the same inode no as of the file .
+  
+ when the file is deleted the link still works, editig in the hard link makes the same changes in the original file.
+
+_______________________________________________________________________________________________________________________editing hard and soft link
+
+$ vim 1
+
+ kirito  kirito  ../5-filesystem  cat soft1 
+test file 1 
+
+ kirito  kirito  ../5-filesystem  vim soft1 
+
+ kirito  kirito  ../5-filesystem  cat soft1 
+test file 1 
+adding in soft 
+
+ kirito  kirito  ../5-filesystem  cat 1
+test file 1 
+adding in soft 
+
+ kirito  kirito  ../5-filesystem  vim 2
+
+ kirito  kirito  ../5-filesystem  cat 2
+hard link
+
+ kirito  kirito  ../5-filesystem  vim hard 
+
+ kirito  kirito  ../5-filesystem  cat hard 
+hard link
+
+adding in hard link
+
+
+-----------------------------------------________________________________________________________________________
