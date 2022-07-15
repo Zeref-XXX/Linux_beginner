@@ -1,0 +1,94 @@
+
+BOOT porocess
+
+1> BIOS 	: Basic I/O process [load boot loader]
+
+2> Bootloader	:  loads kernel in the memory
+
+3> krenel 	: initializes the memory and devices,load the init process 
+
+4> init / mother process
+
+____________________________________________
+3 lvl of abstraction of linux os
+
+1> H/w 		: cpu,memory,ports,hdd/ssd ...
+
+2> kernel	: manage sevices, memory... 
+
+3> user space	: user run programs..
+
+________________________________________-
+Privilege level  / protection ring
+
+kernel mode 	: full access  of everything
+
+user mode	: less access of memory and cpu
+
+___________________________________________________
+
+system call allows user to perform some privilede actions in kernel mode then switch back to user mode
+
+system/sys call : a way for user space processes/applicaions to  request kernel to do somthing for us through  system call Api.
+
+System call APi : amount of services that kernel offer through this are fixed, and each system call has unique id.
+
+________________________________________________________
+
+INIT Process / mother process - Implimintations
+
+1> System v	: Traditional way
+
+2> Upstart 	:
+
+3> Systemd	: New standard
+
+---------------
+
+1> System V : 
+
+starts and stops processes sequentially , easier to resolve dependencies issue.
+
+Performance is not great [ process are starting and stoping one by one ]
+
+status of system is defined by Run level [ 0 -6] states.
+-----------
+Run level states [ /etc/rc(0-6).d ]
+
+0 : shutdown
+1 : single user
+2 : multi user without networking
+3 : multi user with networking
+4 : system is unused/idle
+5 : multiple user are using with networking & 
+6 : Reboot
+_______________________________________________
+2> Upstart 	: used in earlier version of ubuntu
+   uses event & jobs model 
+ jobs - actions performed
+ events - messages received from other processes that triggered the job.
+
+works -> 1'st loads up all the configs from /etc/init, then when the startup event occurs it runs all the jobs that were ment to run by this trigger and this may trigger more jobs and that may trigger more jobs....
+
+_________________________________________________________________
+
+3> Systemd
+
+used Goals to get the system up and running
+ Goals : Targets need to be achieved
+ targets have some depencies that need to be complited to complete the entire process.
+
+-----------------
+works --->
+ 
+1st loads up all the configs files 
+
+targets : 
+
+1> poweroff.target 	: shutdown
+2> rescue.target	: single user
+3> multi-user.taget	: multi-users with networking
+4> graphical.target	: multi-user with networking & GUI
+5> reboot.taget		: reboot
+
+__________________________________________________
